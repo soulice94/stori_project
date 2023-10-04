@@ -1,0 +1,11 @@
+version: '3.7'
+services: 
+  runner:
+    build:
+      context: ./
+      target: base
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=app.py
