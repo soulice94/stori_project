@@ -18,11 +18,11 @@ months = {
     '12':'December'
 }
 
-transactions = {};
 
 with open('txns.csv') as csvfile:
     read_csv = csv.reader(csvfile, delimiter=',')
     line_count = 0
+    transactions = {};
     total_balance = Decimal(0)
     average_debit_amount = Decimal(0)
     average_credit_amount = Decimal(0)
