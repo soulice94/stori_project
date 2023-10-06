@@ -1,2 +1,4 @@
 .vscode
+.aws-sam
+.DS_Store
 lambda-python3.11/.aws-sam
