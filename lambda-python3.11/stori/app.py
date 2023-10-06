@@ -1,6 +1,7 @@
 import json
 import csv
 from decimal import *
+from sendEmail import send
 
 # import requests
 
@@ -76,13 +77,12 @@ def lambda_handler(event, context):
         print(average_credit_amount/count_credit)
         print(average_debit_amount/count_debit)
         print(transactions)
-
+        send()
 
     return {
         "statusCode": 200,
         "body": json.dumps({
             "message": "hello world",
             "total_balance": str(total_balance),
-            # "location": ip.text.replace("\n", "")
         }),
     }
