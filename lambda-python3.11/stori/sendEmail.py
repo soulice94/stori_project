@@ -1,7 +1,8 @@
 import boto3
 from botocore.exceptions import ClientError
+from jinja2 import Template
 
-def send():
+def send(data):
 
     # Replace sender@example.com with your "From" address.
     # This address must be verified with Amazon SES.
@@ -20,7 +21,7 @@ def send():
     AWS_REGION = "us-east-1"
 
     # The subject line for the email.
-    SUBJECT = "Amazon SES Test (SDK for Python)"
+    SUBJECT = "Stori Report - Pedro Flores Test"
 
     # The email body for recipients with non-HTML email clients.
     BODY_TEXT = ("Amazon SES Test (Python)\r\n"
@@ -44,6 +45,8 @@ def send():
     FILE = open("template.html", "r")
     BODY_HTML = FILE.read()
 
+    BODY_HTML = Template(BODY_HTML)
+
 
       
 
@@ -66,7 +69,7 @@ def send():
                 'Body': {
                     'Html': {
                         'Charset': CHARSET,
-                        'Data': BODY_HTML,
+                        'Data': BODY_HTML.render(data),
                     },
                     'Text': {
                         'Charset': CHARSET,
@@ -83,9 +86,7 @@ def send():
             # following line
             # ConfigurationSetName=CONFIGURATION_SET,
         )
+        # return response
     # Display an error if something goes wrong.	
     except ClientError as e:
         print(e.response['Error']['Message'])
-    else:
-        print("Email sent! Message ID:"),
-        print(response['MessageId'])

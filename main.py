@@ -1,7 +1,6 @@
 import csv
 from decimal import *
 
-print ("Stori Excersise")
 
 months = {
     '1': 'January',
@@ -47,7 +46,3 @@ with open('txns.csv') as csvfile:
             total_balance += transaction
         line_count += 1
     
-    print(total_balance)
-    print(average_credit_amount/count_credit)
-    print(average_debit_amount/count_debit)
-    print(transactions)

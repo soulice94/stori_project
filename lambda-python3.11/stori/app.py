@@ -1,5 +1,6 @@
 import json
 import csv
+
 from decimal import *
 from sendEmail import send
 
@@ -53,6 +54,7 @@ def lambda_handler(event, context):
         average_credit_amount = Decimal(0)
         count_debit = 0
         count_credit = 0
+        transactions_data = []
 
         for row in read_csv:
             if line_count > 0:
@@ -73,16 +75,30 @@ def lambda_handler(event, context):
                 total_balance += transaction
             line_count += 1
         
-        print(total_balance)
-        print(average_credit_amount/count_credit)
-        print(average_debit_amount/count_debit)
-        print(transactions)
-        send()
+        average_credit_amount = average_credit_amount/count_credit;
+        average_debit_amount = average_debit_amount/count_debit;
+
+        for key in transactions:
+            transactions_data.append({
+                "month": "Number of transactions in " + key,
+                "count": transactions[key]
+            })
+
+        transactions = transactions_data
+    
+        send({
+            "total_balance": str(total_balance),
+            "average_credit_amount": str(average_credit_amount),
+            "average_debit_amount": str(average_debit_amount),
+            "transactions": transactions})
 
     return {
         "statusCode": 200,
         "body": json.dumps({
-            "message": "hello world",
+            "message": "Email sent successfully!",
             "total_balance": str(total_balance),
+            "average_credit_amount": str(average_credit_amount),
+            "average_debit_amount": str(average_debit_amount),
+            transactions: json.dumps(transactions)
         }),
     }

@@ -17,7 +17,8 @@
             }
             h1 {
                 text-align: center;
-                color: #007bff;
+                color: rgb(20, 162, 138);
+                font-size: 1.5rem;
             }
             table {
                 width: 100%;
@@ -30,56 +31,72 @@
                 border-bottom: 1px solid #ddd;
             }
             th {
-                background-color: #007bff;
+                background-color: rgb(20, 162, 138);;
                 color: #fff;
             }
             .total {
                 font-weight: bold;
-                text-align: right;
+            }
+            .footerContainer {
+                display: flex;
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                @media screen and (max-width: 600px) {
+                    justify-content: center;
+                }
+            }
+            .logo {
+                max-height: 50px;
             }
         </style>
     </head>
     <body>
         <div class="container">
-            <h1>Bank Statement</h1>
+            <h1>Resume of your operations with Stori Card :)</h1>
             <table>
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Description</th>
+                        <th>Transactions</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>{{transaction.month}}</td>
+                            <td>{{transaction.count}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operation</th>
                         <th>Amount</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>01/01/2022</td>
-                        <td>Deposit</td>
-                        <td>$1,000.00</td>
+                        <td class="total">Average debit amount:</td>
+                        <td>{{average_debit_amount}}</td>
                     </tr>
                     <tr>
-                        <td>01/02/2022</td>
-                        <td>Withdrawal</td>
-                        <td>-$100.00</td>
+                        <td class="total">Average credit amount:</td>
+                        <td>{{average_credit_amount}}</td>
                     </tr>
                     <tr>
-                        <td>01/03/2022</td>
-                        <td>Transfer to Savings</td>
-                        <td>-$500.00</td>
-                    </tr>
-                    <tr>
-                        <td>01/04/2022</td>
-                        <td>Interest Earned</td>
-                        <td>$10.00</td>
+                        <td colspan="1" class="total">Total balance is:</td>
+                        <td>{{total_balance}}</td>
                     </tr>
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="2" class="total">Total:</td>
-                        <td>$410.00</td>
-                    </tr>
-                </tfoot>
             </table>
-            <p>Thank you for banking with us!</p>
+            <div class="footerContainer">
+                <h4>Thanks for your preference! 🙌🏽 <br>The Stori Team.</h4>
+                <img class="logo" src="https://stori-pedro-testimages-bucket.s3.amazonaws.com/stori_logo.jpeg" alt="Stori Logo">
+            </div>
         </div>
     </body>
 </html>
