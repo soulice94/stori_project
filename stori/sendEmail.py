@@ -41,7 +41,7 @@ def send(data):
     # Try to send the email.
     try:
         #Provide the contents of the email.
-        response = client.send_email(
+        client.send_email(
             Destination={
                 'ToAddresses': [
                     RECIPIENT,
