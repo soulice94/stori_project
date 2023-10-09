@@ -99,6 +99,6 @@ def lambda_handler(event, context):
             "total_balance": str(total_balance),
             "average_credit_amount": str(average_credit_amount),
             "average_debit_amount": str(average_debit_amount),
-            transactions: json.dumps(transactions)
+            "transactions": json.dumps(transactions)
         }),
     }
