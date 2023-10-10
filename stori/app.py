@@ -23,9 +23,8 @@ def lambda_handler(event, context):
     }
 
     with open('txns.csv') as csvfile:
-        read_csv = csv.reader(csvfile, delimiter=',')
-        line_count = 0
-        transactions = {};
+        read_csv = csv.DictReader(csvfile, delimiter=',')
+        transactions = {}
         total_balance = Decimal(0)
         average_debit_amount = Decimal(0)
         average_credit_amount = Decimal(0)
@@ -33,27 +32,26 @@ def lambda_handler(event, context):
         count_credit = 0
         transactions_data = []
 
-        for row in read_csv:
-            if line_count > 0:
-                date = row[1].split('/')
-                transaction = Decimal(row[2])
-                month = months[date[0]]
-                value = transactions.get(month)
-                if (value):
-                    transactions[month] = value + 1
-                else:
-                    transactions[month] = 1
-                if (transaction < 0):
-                    average_debit_amount += transaction
-                    count_debit += 1
-                else:
-                    average_credit_amount += transaction
-                    count_credit += 1
-                total_balance += transaction
-            line_count += 1
+        for transaction in read_csv:
+
+            date = transaction['Date'].split('/')
+            transaction = Decimal(transaction['Transaction'])
+            month = months[date[0]]
+            value = transactions.get(month)
+            if (value):
+                transactions[month] = value + 1
+            else:
+                transactions[month] = 1
+            if (transaction < 0):
+                average_debit_amount += transaction
+                count_debit += 1
+            else:
+                average_credit_amount += transaction
+                count_credit += 1
+            total_balance += transaction
         
-        average_credit_amount = average_credit_amount/count_credit;
-        average_debit_amount = average_debit_amount/count_debit;
+        average_credit_amount = average_credit_amount/count_credit
+        average_debit_amount = average_debit_amount/count_debit
 
         for key in transactions:
             transactions_data.append({
